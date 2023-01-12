@@ -3,13 +3,16 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import Grid from './Grid';
 import Header from './Header';
+import Loading from './Loading';
 const URL = 'http://localhost:4000'
 
 function App() {
   const [n, setN] = useState('');
   const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const sendNum = async () => {
+      setLoading(true);
       const { data } = await axios.post(`${URL}/fizzbuzz`, {n}).catch((e) => console.log(e));
       if (data && data.answer) {
         localStorage.setItem(`answer_${n}`, JSON.stringify(data.answer));
@@ -28,9 +31,10 @@ function App() {
           allAnswers.push({num: itemKey, fizzbuzz});
         }
       }
+      setLoading(false);
       setAnswers(allAnswers);
     }
-  }, [answers]);
+  }, [answers, loading]);
 
   return (
     <div className='App'>
@@ -42,6 +46,7 @@ function App() {
           </label>
           <input type='submit' />
         </form>
+        {loading && <Loading />}
         <Grid answers={answers} />
     </div>
   );
