@@ -30,7 +30,7 @@ function App() {
       }
       setAnswers(allAnswers);
     }
-  }, []);
+  }, [answers]);
 
   return (
     <div className='App'>
