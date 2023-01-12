@@ -34,7 +34,7 @@ function App() {
       setLoading(false);
       setAnswers(allAnswers);
     }
-  }, [answers, loading]);
+  }, []);
 
   return (
     <div className='App'>
@@ -47,7 +47,7 @@ function App() {
           <input type='submit' />
         </form>
         {loading && <Loading />}
-        <Grid answers={answers} />
+        {!loading && <Grid answers={answers} />}
     </div>
   );
 }
